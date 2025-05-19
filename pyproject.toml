@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "simulation-skeleton"
+version = "0.1.0"
+description = "whereareyou-DASH simulation skeleton"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.7"
+shapely = "^2.0"
+numpy = "^1.25"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
