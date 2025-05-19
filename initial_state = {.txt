@@ -1,0 +1,9 @@
+initial_state = {
+    'C': 0.1, 'psi': 11, 'S': 1.0, 'R': 200, 'P': 1,
+    # ...
+}
+inputs = {
+    # ...
+    'drift': 0.92, 'repair': 0.93   # +0.01 buffer
+    # ...
+}

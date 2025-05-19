@@ -1,0 +1,64 @@
+{
+  "factions": [
+    {
+      "id": "faction-01",
+      "name": "Governance Resonance",
+      "psi_multiplier": 1.2,
+      "cci_adjustment": -0.1,
+      "stability_requirement": 0.8,
+      "anomaly_tolerance": 0.5,
+      "investment_pref": 1.1,
+      "validation_thresholds": {
+        "Psi_min": 10.0,
+        "C_min": 0.5,
+        "S_min": 0.7,
+        "AS_max": 2.0
+      }
+    },
+    {
+      "id": "faction-02",
+      "name": "Eclipse Cult",
+      "psi_multiplier": 1.5,
+      "cci_adjustment": 0.2,
+      "stability_requirement": 0.6,
+      "anomaly_tolerance": 0.8,
+      "investment_pref": 0.9,
+      "validation_thresholds": {
+        "Psi_min": 5.0,
+        "C_min": 0.3,
+        "S_min": 0.5,
+        "AS_max": 3.5
+      }
+    },
+    {
+      "id": "faction-03",
+      "name": "Iron Accord",
+      "psi_multiplier": 0.8,
+      "cci_adjustment": 0.0,
+      "stability_requirement": 0.95,
+      "anomaly_tolerance": 0.3,
+      "investment_pref": 1.3,
+      "validation_thresholds": {
+        "Psi_min": 15.0,
+        "C_min": 0.7,
+        "S_min": 0.9,
+        "AS_max": 1.5
+      }
+    },
+    {
+      "id": "faction-04",
+      "name": "Vermillion Syndicate",
+      "psi_multiplier": 1.8,
+      "cci_adjustment": -0.3,
+      "stability_requirement": 0.4,
+      "anomaly_tolerance": 1.2,
+      "investment_pref": 0.7,
+      "validation_thresholds": {
+        "Psi_min": 3.0,
+        "C_min": 0.2,
+        "S_min": 0.3,
+        "AS_max": 4.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+factions_to_compare = {
+    k: v for k, v in factions.items() if k in ['faction-01', 'faction-02', 'faction-03', 'faction-04']
+}
+plot_faction_comparison(
+    factions_to_compare,
+    initial_state,
+    weights,
+    alphas,
+    anchors,
+    psi_max=100,
+    inputs=inputs,
+    beats=10
+)

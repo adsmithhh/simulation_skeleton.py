@@ -1,6 +1,9 @@
 import random
 import math
 import matplotlib.pyplot as plt
+import datetime
+import os
+import json
 
 class FreezeException(Exception):
     pass
@@ -26,7 +29,7 @@ class NodeAnchor:
             return efs
 
 class Simulation:
-    def __init__(self, initial_state, weights, alphas, anchors, psi_max):
+    def __init__(self, initial_state, weights, alphas, anchors, psi_max, faction):
         self.state = initial_state.copy()
         self.weights = weights
         self.alphas = alphas
@@ -36,6 +39,7 @@ class Simulation:
         self.last_inputs = {}
         self.history = []
         self.contradictions = []
+        self.faction = faction  # <-- Add this line
 
     def update_flux(self, d, I_ritual, R_phi):
         psi = self.state['psi']
@@ -124,28 +128,97 @@ def plot_simulation(history):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("simulation_plot.png")
+    # Save with timestamp in sim_plots folder
+    folder = "sim_plots"
+    os.makedirs(folder, exist_ok=True)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = os.path.join(folder, f"simulation_plot_{timestamp}.png")
+    plt.savefig(filename)
     plt.show()
+    return filename
+
+def plot_faction_comparison(factions, initial_state, weights, alphas, anchors, psi_max, inputs, beats=10):
+    plt.figure(figsize=(10, 6))
+    for faction_id, faction in factions.items():
+        sim = Simulation(initial_state, weights, alphas, anchors, psi_max, faction)
+        try:
+            for _ in range(beats):
+                sim.step(inputs)
+        except FreezeException:
+            pass
+        C_vals = [entry['state']['C'] for entry in sim.history]
+        plt.plot(range(1, len(C_vals)+1), C_vals, label=f"{faction_id}: {faction['name']}")
+    plt.xlabel('Beat')
+    plt.ylabel('C (Convergence)')
+    plt.title('Convergence Comparison Across Factions')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    folder = "sim_plots"
+    os.makedirs(folder, exist_ok=True)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = os.path.join(folder, f"faction_comparison_{timestamp}.png")
+    plt.savefig(filename)
+    plt.show()
+    return filename  # <-- Add this line
+
+def load_factions(filename="faction.json"):
+    with open(filename) as f:
+        data = json.load(f)
+    return {f['id']: f for f in data['factions']}
+
+def get_faction(faction_id, factions):
+    return factions.get(faction_id, None)
+
+def validate_goods(record, factions):
+    faction = get_faction(record['producer'], factions)
+    if not faction:
+        record['reasons'].append('Unknown faction')
+        return False
+
+    # Apply multipliers
+    record['psionic_signature'] *= faction['psi_multiplier']
+    record['convergence_score'] += faction['cci_adjustment']
+
+    # Use faction-specific thresholds
+    thresholds = faction['validation_thresholds']
+    if record['psionic_signature'] < thresholds['Psi_min']:
+        record['reasons'].append('Ψ below faction-min')
+    if record['convergence_score'] < thresholds['C_min']:
+        record['reasons'].append('C below faction-min')
+    if record['stability'] < thresholds['S_min']:
+        record['reasons'].append('S below faction-min')
+    if record['anomaly_score'] > thresholds['AS_max']:
+        record['reasons'].append('AS above faction-max')
+
+    return len(record['reasons']) == 0
+
+def update_currency_supply(M, psi, faction):
+    beta_psi = 1.0  # Example coefficient
+    return M + beta_psi * (psi * faction['psi_multiplier']) * faction['investment_pref']
 
 def main():
+    factions = load_factions("faction.json")  # No argument needed, uses the full path by default
+    faction = factions['faction-01']
+
     initial_state = {
         'C': 0.1, 'psi': 11, 'S': 0.1, 'R': 200, 'P': 1,
-        'Node-12': {'EFS': 99},
-        'Node-51': {'EFS': 29},
-        'Node-23': {'EFS': 88}
+        'Node-12': {'EFS': 29},
+        'Node-51': {'EFS': 99},
+        'Node-23': {'EFS': 18}
     }
-    weights = {'w_psi': 0.1, 'w_OM': 0.1, 'w_SB': 0.001}
+    weights = {'w_psi': 0.9, 'w_OM': 0.6, 'w_SB': 0.01}
     alphas = {'alpha_C': 1.0, 'alpha_shock': 1.5, 'alpha_order': 0.5}
     anchors = {
         'Node-12': NodeAnchor('linear', {'r': 0.053}),
         'Node-51': NodeAnchor('exponential', {'h': 4.8}),
         'Node-23': NodeAnchor('stochastic', {'drops': [0.03, 0.05, 0.07], 'probs': [0.5, 0.3, 0.2]})
     }
-    sim = Simulation(initial_state, weights, alphas, anchors, psi_max=100)
+    sim = Simulation(initial_state, weights, alphas, anchors, psi_max=100, faction=faction)
 
     inputs = {
-        'd': 0.99, 'I_ritual': 1, 'R_phi': 0.9,
-        'drift': 0.92, 'repair': 0.9,
+        'd': 0.29, 'I_ritual': 1, 'R_phi': 0.3,
+        'drift': 0.11, 'repair': 0.95,
         'E': 1, 'D': 1, 'R_max': 250,
         'S_shock': 0.9, 'O_action': 0.1
     }
@@ -164,7 +237,36 @@ def main():
             for entry in sim.contradictions:
                 f.write(f"{entry}\n")
 
-    plot_simulation(sim.history)
+    plot_file = plot_simulation(sim.history)
+    print(f"Plot saved as {plot_file}")
+
+    # Only compare Governance Resonance and Iron Accord
+    factions_to_compare = {
+      k: v for k, v in factions.items() if k in ['faction-01', 'faction-02', 'faction-03', 'faction-04']
+
+    }
+    comparison_file = plot_faction_comparison(
+        factions_to_compare,
+        initial_state,
+        weights,
+        alphas,
+        anchors,
+        psi_max=100,
+        inputs=inputs,
+        beats=10
+    )
+    print(f"Faction comparison plot saved as {comparison_file}")
+
+    # Extract and save only the beats information to a new file
+    input_file = "simulation_output.txt"
+    output_file = "simulation_output_clean.txt"
+
+    with open(input_file, "r") as infile, open(output_file, "w") as outfile:
+        for line in infile:
+            if "Beat" in line:
+                outfile.write(line)
+
+    print(f"Cleaned output saved to {output_file}")
 
 if __name__ == '__main__':
     main()
