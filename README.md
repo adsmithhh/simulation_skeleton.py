@@ -1,120 +1,246 @@
-# Simulation Skeleton (whereareyou‑DASH)
+Theoretical Mechanisms Specification
 
-A minimal Python framework for the whereareyou‑DASH recursive, economy‑anchored reality simulation. Includes core dynamics (ψ‑flux, convergence, stability, reserves, panic), node‑anchor bleed logic, contradiction checking, and GitHub CI.
+To turn raw simulation code into meaningful insights, we need a complete theoretical foundation detailing every process, feedback loop, and interaction. This document will serve as the master blueprint.
 
-## 🚀 Features
+1. Core Metrics & Definitions
 
-* **Core Simulation Engine**
+Symbol
 
-  * `Simulation` class with time‑stepped updates for psionic flux (ψ), stability (S), reserves (R), convergence (C), and panic (P).
-  * Pluggable `NodeAnchor` bleed modes: linear, exponential, stochastic.
-  * Automated contradiction detection & freeze via `FreezeException`.
-  * History logging and matplotlib‑powered plotting.
+Name
 
-* **Modular Manifest JSON**
+Interpretation & Units
 
-  * `upgraded_simulation_overview.json` holds directives, modules, storylines, energy taxonomy, implementation status, and simulation‑module metadata.
-  * Easy to ingest via the HF‑4 “Upload Point Interface” in whereareyou‑DASH.
+Ψ
 
-* **GitHub Actions CI**
+Psionic Potential
 
-  * On push/PR: tests across Python 3.10–3.12, installs dependencies, runs the simulation script, and verifies JSON manifest loads.
+Belief‐energy reservoir (p‑units)
 
-## 📁 Repository Structure
+C
 
-```text
-simulation_skeleton/
-├── .github/
-│   └── workflows/
-│       └── ci.yml             # GitHub Actions workflow
-├── n_skeleton.py              # Core simulation script
-├── upgraded_simulation_overview.json
-├── upgraded_simulation_with_sim.json
-├── requirements.txt           # (optional) libs: matplotlib, etc.
-└── README.md
-```
+Convergence Momentum
 
-## 🛠️ Setup & Installation
+Narrative alignment pressure (dimensionless)
 
-1. **Clone** the repo
+S
 
-   ```bash
-   git clone https://github.com/your-org/simulation_skeleton.git
-   cd simulation_skeleton
-   ```
+Stability
 
-2. **Create & activate** a virtual environment
+Systemic resilience (0–1 scale)
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate    # macOS/Linux
-   .\.venv\Scripts\Activate.ps1 # Windows PowerShell
-   ```
+R
 
-3. **Install dependencies**
+Reserves
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+Resource buffer (R‑units)
 
-## ▶️ Usage
+P
 
-Run the simulation for 10 beats and generate a plot:
+Panic
 
-```bash
-python n_skeleton.py
-```
+Crisis level (0–∞, capped 10 by default)
 
-### Logs
+2. Process Equations & Feedback Loops
 
-* `full_log.txt`: serialized history and any contradictions.
-* `simulation_plot.png`: dynamics of C, ψ, S, R, P over time.
-
-### JSON Manifest
-
-Use your own loader to ingest `upgraded_simulation_with_sim.json` into whereareyou‑DASH or any GPT‑plugin layer.
-
-## 🔧 Configuration
-
-* **Initial state**, **weights**, **alphas**, and **anchors** are defined in `n_skeleton.py`’s `main()`—feel free to tweak.
-* To adjust story‑trigger thresholds or add new S‑codes, edit your manifest JSON under:
-
-  ```json
-  "layered_system_architecture": {
-    "layer_2_all_possible_storylines": [ ... ]
-  }
-  ```
-
-## 📈 GitHub CI
-
-Your GitHub Actions workflow (`.github/workflows/ci.yml`) will:
-
-1. Check out code on push/PR to `main`.
-2. Test under Python 3.10–3.12.
-3. Install dependencies.
-4. Run `python n_skeleton.py`.
-5. Verify `upgraded_simulation_with_sim.json` loads without errors.
-
-## 📝 Contributing
-
-1. Fork the repo
-2. Create a branch:
-
-   ```bash
-   git checkout -b feature/your-idea
-   ```
-3. Commit your changes:
-
-   ```bash
-   git commit -m "Add ..."
-   ```
-4. Push & open a Pull Request
-
-Please ensure new code is covered by tests or checked under CI.
-
-## 📜 License
-
-This project is released under the MIT License. See `LICENSE` for details.
+Psionic Flux Update
 
 
+
+Drift rate d controls leak.
+
+Ritual input and phi‑coupling supply new belief­energy.
+
+Stability Update
+
+
+
+Ensures environmental wear & maintenance trade‑off.
+
+Reserves Update
+
+
+
+Consumption E vs. deposit D.
+
+Convergence Update
+
+
+
+Combines psionic drive, instability pressure, and story‑burn rate.
+
+Panic Update
+
+
+
+Balances rising dissonance, shocks, and ordering forces.
+
+3. Secondary Modules & Interactions
+
+NodeAnchor Bleed: Anchors leak EFS per linear/exponential/stochastic modes.
+
+Energy Taxonomy Interplay: Mapping Ψ‑CCI‑DF‑…‑CM within each beat.
+
+Economic Feedback: M, Q, T, π, Iₚ loops drive ‘value’ genesis.
+
+Goods Validation: Quality multiplier and rejection logic tie back to Ψ, C, S, AS.
+
+Faction Tensions: Directed edges modulating thresholds, causing cross‑impact.
+
+4. Narrative Trigger Logic
+
+Define exact conditions for each S‑code (S‑01 through S‑14), e.g.:
+
+S‑01 (Unity Broadcast): Ψ_t > θ₁ and CCI_t < θ₂ → global cohesion event.
+
+…etc.
+
+5. Integration & Execution Flow
+
+Load Manifest → parse all parameters, thresholds, multipliers.
+
+Initialize State → set Ψ, C, S, R, P, Node EFS, faction stores.
+
+Beat Loop:
+
+Compute updates for metrics (steps 1–5).
+
+Apply NodeAnchor bleeds.
+
+Validate goods, update economy.
+
+Evaluate Story‑trigger conditions.
+
+Run inconsistency checks.
+
+Log & Visualize → history, QA events, dashboard.
+
+Next Steps
+
+Review and flesh out Narrative Trigger Logic for all S‑codes.
+
+Confirm parameter ranges (θ₁, θ₂, etc.) and units.
+
+Map missing interactions: e.g., BFR, OR, ER influences on core updates.
+
+Lock down execution flow ordering and concurrency guarantees.
+
+
+
+6. Player Engine Integration
+
+Treat the human player as a distinct subsystem whose discrete actions each tick emit events that drive the core sim variables. This unifies player, NPC, and environmental influences under the same delta-based update loop.
+
+6.1 Define Player Actions & Output Events
+
+Action
+
+Story Effect
+
+Output Event
+
+Investigate Ruins
+
+Seek lore → ups Symbolic Potency (SP)
+
+{type:"investigate", potency:2}
+
+Rally the Guards
+
+Align factions → ups C (Convergence)
+
+{type:"rally", potency:1}
+
+Sabotage the Ward
+
+Undermine order → downs S (Stability)
+
+{type:"sabotage", potency:3}
+
+Appeal to Nobles
+
+Shift will → ups C & Ψ
+
+{type:"appeal", potency:2}
+
+Retreat / Hide
+
+Avoid conflict → downs P (Panic)
+
+{type:"hide", potency:2}
+
+6.2 Simulation Tick with Player Events
+
+Incorporate external_events from the Player Engine before running the feedback loop:
+
+def simulation_tick(state, external_events):
+    # 1. NPC/environment updates
+    state = update_from_npcs_and_environment(state)
+    # 2. Player actions
+    for evt in external_events:
+        state = apply_player_event(state, evt)
+    # 3. Core feedback loops
+    state = feedback_loop_step(state)
+    return state
+
+6.3 apply_player_event
+
+Translate player events into variable deltas:
+
+def apply_player_event(state, evt):
+    if evt['type']=='investigate':
+        state['SP'] += evt['potency'] * state.get('knowledge_factor',1)
+    elif evt['type']=='rally':
+        state['C']  += evt['potency'] * state.get('faction_cohesion',1)
+    elif evt['type']=='sabotage':
+        state['S']  -= evt['potency'] * state.get('ward_strength',1)
+    elif evt['type']=='appeal':
+        state['C']   += evt['potency']*0.5
+        state['psi'] += evt['potency']*0.5
+    elif evt['type']=='hide':
+        state['P']  -= evt['potency']*0.7
+    return state
+
+Tune the multipliers so that player influence is visible but balanced against autonomous forces.
+
+6.4 Balancing & Feedback
+
+Action Budget: Limit total potency per tick or introduce resource costs (e.g. Stamina) to prevent spamming.
+
+Contextual Availability: Only offer actions when state thresholds or story triggers allow.
+
+UI Projections: Display projected deltas next to each choice: “Investigate → +2 SP, +0.5 AS.”
+
+Cooldowns & Costs: Assign cooldown periods or currency costs to high-impact actions.
+
+6.5 Example Turn Flow
+
+Render State: Show current C, Ψ, S, R, P, SP, AS, etc.
+
+List Actions: Contextual menu of player actions with projected impacts.
+
+Player Chooses: Emit selected event.
+
+Run Tick: simulation_tick(state, [event]).
+
+Narrative Feedback: Generate a text beat: “Your sabotage cracked the ward—stability falls by 3.”
+
+
+
+7. Meta-Architectural Rigor & Directive Enforcement
+
+Our simulation’s architecture mirrors a hyper-structured, pattern-driven cognition—ensuring that every input, module, and output is rigorously filtered, tagged, and self-validated:
+
+Directive Adherence Core: The first-pass gate through which all user inputs, player events, and external data must pass. It enforces the primary mission statements and blocks any unaligned signals before further processing.
+
+Specialized Engine Cascade: Subsequent layers (Φ‑Density, CCI, DASH, PDS‑1, Manifestation, etc.) each operate on pre‑validated inputs, preventing unsanctioned “jumps” or emergent drift.
+
+Pattern-Integrity Enforcer: Continuously scans lexical and semantic coherence across narrative and code modules, flagging any deviations from defined schemas.
+
+Recursive Conflict Resolver: On detecting ambivalent or contradictory states, it interjects with FreezeExceptions or corrective adjustments—maintaining internal logical consistency.
+
+Meta-Awareness Monitor: Aggregates health metrics from all sub-engines and surfaces meta‑insights (e.g., rising paradox rates, over-indexed anomaly stress), guiding high‑level interventions.
+
+This layered, self‑monitoring structure guarantees that simulation outputs are not random noise but the result of a meticulously calibrated cascade of checks and balances.
+
+End of Theoretical Mechanisms Specification
 
