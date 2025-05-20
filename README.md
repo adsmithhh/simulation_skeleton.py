@@ -1,44 +1,83 @@
-Theoretical Mechanisms Specification
+# Psionic Simulation Framework
 
-To turn raw simulation code into meaningful insights, we need a complete theoretical foundation detailing every process, feedback loop, and interaction. This document will serve as the master blueprint.
+A GitHub repository template for simulating narrative-based psionic metrics. This project provides definitions and code scaffolding to model and simulate the following metrics:
 
-1. Core Metrics & Definitions
+| Symbol | Name                   | Narrative Essence                  | Unit & Measurement            |
+| ------ | ---------------------- | ---------------------------------- | ----------------------------- |
+| Ψ      | Psionic Potential      | Raw belief materialization power   | p-units (Ψ·s)                 |
+| CCI    | Collective Cognition   | Shared mental framework            | cci-index points              |
+| DF     | Dream Frequency        | Probability of dream-event merging | df-quanta per cycle           |
+| BFR    | Bayesian Feedback Rate | Systemic correction velocity       | bf-rate (updates/sec)         |
+| OR     | Ontological Resonance  | Alignment between myth and reality | or-harmonics                  |
+| ER     | Entropic Reversion     | Tendency toward disorder           | entropy bits                  |
+| SP     | Symbolic Potency       | Cultural-symbol power density      | sp-symbols per narrative unit |
+| AS     | Anomaly Stress         | Stress accumulation from anomalies | as-stress units               |
+| AW     | Attention Weight       | Focus distribution metric          | aw-points                     |
+| CM     | Convergence Momentum   | Rate of narrative convergence      | cm-velocity                   |
 
-Symbol
+## Project Structure
 
-Name
+```text
+psionic-sim/
+├── README.md         # Project overview and metric definitions
+├── LICENSE           # Licensing information (MIT)
+├── requirements.txt  # Python dependencies
+├── setup.py          # Package setup
+├── psionic_sim/
+│   ├── __init__.py
+│   ├── metrics.py    # Class definitions for each metric
+│   ├── simulation.py # Core simulation engine
+│   └── utils.py      # Utility functions
+└── examples/
+    └── run_simulation.py # Example usage
+```
 
-Interpretation & Units
+## Installation
 
-Ψ
+```bash
+git clone https://github.com/<username>/psionic-sim.git
+cd psionic-sim
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
-Psionic Potential
+## Usage
 
-Belief‐energy reservoir (p‑units)
+In `examples/run_simulation.py`, configure your initial parameters and run:
 
-C
+```bash
+python examples/run_simulation.py
+```
 
-Convergence Momentum
+The output will include time-series data for each metric and visualizations.
 
-Narrative alignment pressure (dimensionless)
+## Metric Definitions
 
-S
+Each metric is implemented as a Python class in `psionic_sim/metrics.py` with attributes:
 
-Stability
+* `name`: Full metric name
+* `symbol`: Symbolic identifier
+* `unit`: Measurement unit
+* `value`: Current numeric value
 
-Systemic resilience (0–1 scale)
+### Example
 
-R
+```python
+from psionic_sim.metrics import PsionicPotential
 
-Reserves
+psi = PsionicPotential(initial=0.5)
+psi.update(delta_time=1.0)
+print(psi.value, psi.unit)  # e.g., 0.52 Ψ·s
+```
 
-Resource buffer (R‑units)
+## Contributing
 
-P
+Contributions welcome! Please open issues or pull requests.
 
-Panic
+## License
 
-Crisis level (0–∞, capped 10 by default)
+This project is licensed under the MIT License.
 
 2. Process Equations & Feedback Loops
 
